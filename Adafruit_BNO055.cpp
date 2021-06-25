@@ -826,8 +826,8 @@ void Adafruit_BNO055::enterNormalMode() {
             freq = data output frequency
             opmode = operation mode
  */
-void setGyroscopeConfig(adafruit_bno055_gyro_range_t range,
-                        adafruit_bno055_gyro_freq_t freq,
+void Adafruit_BNO055::setGyroscopeConfig(adafruit_bno055_gyro_freq_t freq,
+                        adafruit_bno055_gyro_range_t range,
                         adafruit_bno055_gyro_oper_t opmode)
 {
   adafruit_bno055_opmode_t modeback = _mode;
@@ -852,8 +852,8 @@ void setGyroscopeConfig(adafruit_bno055_gyro_range_t range,
             freq = data output frequency
             opmode = operation mode
  */
-void setAccelerometerConfig(adafruit_bno055_accel_range_t range,
-                            adafruit_bno055_accel_freq_t freq,
+void Adafruit_BNO055::setAccelerometerConfig(adafruit_bno055_accel_freq_t freq,
+                            adafruit_bno055_accel_range_t range,
                             adafruit_bno055_accel_oper_t opmode)
 {
   adafruit_bno055_opmode_t modeback = _mode;
@@ -874,7 +874,7 @@ void setAccelerometerConfig(adafruit_bno055_accel_range_t range,
             opmode = operation mode
             pwrmode =
  */
-void setMagnetometerConfig(adafruit_bno055_mag_freq_t freq,
+void Adafruit_BNO055::setMagnetometerConfig(adafruit_bno055_mag_freq_t freq,
                            adafruit_bno055_mag_oper_t opmode,
                            adafruit_bno055_mag_pwr_t pwrmode)
 {
@@ -883,7 +883,7 @@ void setMagnetometerConfig(adafruit_bno055_mag_freq_t freq,
   /* Switch to config mode (just in case since this is the default) */
   setMode(OPERATION_MODE_CONFIG);
   delay(25);
-  write8(MAG_CONFIG, freq | opmode | pwrmod);
+  write8(MAG_CONFIG, freq | opmode | pwrmode);
 
   /* Set the original operating mode (see section 3.3) */
   setMode(modeback);

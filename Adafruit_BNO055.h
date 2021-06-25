@@ -227,14 +227,14 @@ public:
 
   /** Gyroscope Bandwidth Settings */
   typedef enum {
-    GYRO_FREQ_523HZ = 0X00
+    GYRO_FREQ_523HZ = 0X00,
     GYRO_FREQ_230HZ = 0X08,
     GYRO_FREQ_116HZ = 0X10,
     GYRO_FREQ_47HZ = 0X18,
     GYRO_FREQ_23HZ = 0X20,
     GYRO_FREQ_12HZ = 0X28,
     GYRO_FREQ_64HZ = 0X30,
-    GYRO_FREQ_32HZ = 0X38,
+    GYRO_FREQ_32HZ = 0X38
   } adafruit_bno055_gyro_freq_t;
 
   /** Gyroscope Range Settings */
@@ -252,7 +252,7 @@ public:
     GYRO_OPER_FASTPOWER = 0X01,
     GYRO_OPER_DEEPSUSPEND = 0X02,
     GYRO_OPER_SUSPEND = 0X03,
-    GYRO_OPER_ADVPOWERSAVE = 0X04
+    GYRO_OPER_ADVPOWERSAVE = 0X04,
     GYRO_OPER_UNDEFINED = 0xFF
   } adafruit_bno055_gyro_oper_t;
 
@@ -412,12 +412,12 @@ public:
   bool isFullyCalibrated();
 
   /* Individual Configuration functions */
-  void setGyroscopeConfig(adafruit_bno055_gyro_range_t range = GYRO_RANGE_2000DPS,
-                          adafruit_bno055_gyro_freq_t freq = GYRO_FREQ_230HZ,
+  void setGyroscopeConfig(adafruit_bno055_gyro_freq_t freq = GYRO_FREQ_230HZ,
+                          adafruit_bno055_gyro_range_t range = GYRO_RANGE_2000DPS,
                           adafruit_bno055_gyro_oper_t opmode = GYRO_OPER_UNDEFINED);
 
-  void setAccelerometerConfig(adafruit_bno055_accel_range_t range = ACCEL_RANGE_4G,
-                              adafruit_bno055_accel_freq_t freq = ACCEL_FREQ_250HZ,
+  void setAccelerometerConfig(adafruit_bno055_accel_freq_t freq = ACCEL_FREQ_250HZ,
+                              adafruit_bno055_accel_range_t range = ACCEL_RANGE_4G,
                               adafruit_bno055_accel_oper_t opmode = ACCEL_OPER_NORMAL);
 
   void setMagnetometerConfig(adafruit_bno055_mag_freq_t freq = MAG_FREQ_10HZ,
