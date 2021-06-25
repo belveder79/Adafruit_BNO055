@@ -206,12 +206,113 @@ public:
     GYRO_OFFSET_Z_LSB_ADDR = 0X65,
     GYRO_OFFSET_Z_MSB_ADDR = 0X66,
 
+    /* Accelerometer Config registers */
+    ACC_CONFIG = 0X08,
+    ACC_SLEEP_CONFIG = 0X0C,
+
+    /* Magnetometer Config registers */
+    MAG_CONFIG = 0X09,
+
+    /* Gyroscope Config registers */
+    GYRO_CONFIG_0 = 0X0A,
+    GYRO_CONFIG_1 = 0X0B,
+    GYRO_SLEEP_CONFIG = 0X0D,
+
     /* Radius registers */
     ACCEL_RADIUS_LSB_ADDR = 0X67,
     ACCEL_RADIUS_MSB_ADDR = 0X68,
     MAG_RADIUS_LSB_ADDR = 0X69,
     MAG_RADIUS_MSB_ADDR = 0X6A
   } adafruit_bno055_reg_t;
+
+  /** Gyroscope Bandwidth Settings */
+  typedef enum {
+    GYRO_FREQ_523HZ = 0X00
+    GYRO_FREQ_230HZ = 0X08,
+    GYRO_FREQ_116HZ = 0X10,
+    GYRO_FREQ_47HZ = 0X18,
+    GYRO_FREQ_23HZ = 0X20,
+    GYRO_FREQ_12HZ = 0X28,
+    GYRO_FREQ_64HZ = 0X30,
+    GYRO_FREQ_32HZ = 0X38,
+  } adafruit_bno055_gyro_freq_t;
+
+  /** Gyroscope Range Settings */
+  typedef enum {
+    GYRO_RANGE_125DPS = 0X04,
+    GYRO_RANGE_250DPS = 0X03,
+    GYRO_RANGE_500DPS = 0X02,
+    GYRO_RANGE_1000DPS = 0X01,
+    GYRO_RANGE_2000DPS = 0X00
+  } adafruit_bno055_gyro_range_t;
+
+  /** Gyroscope Operation Settings */
+  typedef enum {
+    GYRO_OPER_NORMAL = 0X00,
+    GYRO_OPER_FASTPOWER = 0X01,
+    GYRO_OPER_DEEPSUSPEND = 0X02,
+    GYRO_OPER_SUSPEND = 0X03,
+    GYRO_OPER_ADVPOWERSAVE = 0X04
+    GYRO_OPER_UNDEFINED = 0xFF
+  } adafruit_bno055_gyro_oper_t;
+
+  /** Accelerometer Bandwidth Settings */
+  typedef enum {
+    ACCEL_FREQ_7_81HZ = 0X00,
+    ACCEL_FREQ_15_63HZ = 0X04,
+    ACCEL_FREQ_31_25HZ = 0X08,
+    ACCEL_FREQ_62_5HZ = 0X0C,
+    ACCEL_FREQ_125HZ = 0X10,
+    ACCEL_FREQ_250HZ = 0X14,
+    ACCEL_FREQ_500HZ = 0X18,
+    ACCEL_FREQ_1000HZ = 0X1C
+  } adafruit_bno055_accel_freq_t;
+
+  /** Accelerometer Range Settings */
+  typedef enum {
+    ACCEL_RANGE_2G = 0X00,
+    ACCEL_RANGE_4G= 0X01,
+    ACCEL_RANGE_8G= 0X02,
+    ACCEL_RANGE_16G= 0X03
+  } adafruit_bno055_accel_range_t;
+
+  /** Accelerometer Operation Settings */
+  typedef enum {
+    ACCEL_OPER_NORMAL = 0X00,
+    ACCEL_OPER_SUSPEND = 0X20,
+    ACCEL_OPER_LOWPOW1 = 0X40,
+    ACCEL_OPER_STANDBY = 0X60,
+    ACCEL_OPER_LOWPOW2 = 0X80,
+    ACCEL_OPER_DEEPSUSPEND = 0XA0
+  } adafruit_bno055_accel_oper_t;
+
+  /** Magnetometer Bandwidth Settings */
+  typedef enum {
+    MAG_FREQ_2HZ = 0X00,
+    MAG_FREQ_6HZ = 0X01,
+    MAG_FREQ_8HZ = 0X02,
+    MAG_FREQ_10HZ = 0X03,
+    MAG_FREQ_15HZ = 0X04,
+    MAG_FREQ_20HZ = 0X05,
+    MAG_FREQ_25HZ = 0X06,
+    MAG_FREQ_30HZ = 0X07
+  } adafruit_bno055_mag_freq_t;
+
+  /** Magnetometer Operation Settings */
+  typedef enum {
+    MAG_OPER_LOWPOW = 0X00,
+    MAG_OPER_REGULAR = 0X08,
+    MAG_OPER_ENHANCED_REGULAR = 0X10,
+    MAG_OPER_HIGHACCURACY = 0X18
+  } adafruit_bno055_mag_oper_t;
+
+  /** Magnetometer Power Settings */
+  typedef enum {
+    MAG_PWR_NORMAL = 0X00,
+    MAG_PWR_SLEEP = 0X20,
+    MAG_PWR_SUSPEND = 0X40,
+    MAG_PWR_FORCEMODE = 0X60
+  } adafruit_bno055_mag_pwr_t;
 
   /** BNO055 power settings */
   typedef enum {
@@ -309,6 +410,19 @@ public:
   void setSensorOffsets(const uint8_t *calibData);
   void setSensorOffsets(const adafruit_bno055_offsets_t &offsets_type);
   bool isFullyCalibrated();
+
+  /* Individual Configuration functions */
+  void setGyroscopeConfig(adafruit_bno055_gyro_range_t range = GYRO_RANGE_2000DPS,
+                          adafruit_bno055_gyro_freq_t freq = GYRO_FREQ_230HZ,
+                          adafruit_bno055_gyro_oper_t opmode = GYRO_OPER_UNDEFINED);
+
+  void setAccelerometerConfig(adafruit_bno055_accel_range_t range = ACCEL_RANGE_4G,
+                              adafruit_bno055_accel_freq_t freq = ACCEL_FREQ_250HZ,
+                              adafruit_bno055_accel_oper_t opmode = ACCEL_OPER_NORMAL);
+
+  void setMagnetometerConfig(adafruit_bno055_mag_freq_t freq = MAG_FREQ_10HZ,
+                             adafruit_bno055_mag_oper_t opmode = MAG_OPER_REGULAR,
+                             adafruit_bno055_mag_pwr_t pwrmode = MAG_PWR_FORCEMODE);
 
   /* Power managments functions */
   void enterSuspendMode();

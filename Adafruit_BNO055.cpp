@@ -821,6 +821,76 @@ void Adafruit_BNO055::enterNormalMode() {
 }
 
 /*!
+ *  @brief  Writes to the sensor's gyroscope config registers
+ *  @param  range = sensitivity range
+            freq = data output frequency
+            opmode = operation mode
+ */
+void setGyroscopeConfig(adafruit_bno055_gyro_range_t range,
+                        adafruit_bno055_gyro_freq_t freq,
+                        adafruit_bno055_gyro_oper_t opmode)
+{
+  adafruit_bno055_opmode_t modeback = _mode;
+
+  /* Switch to config mode (just in case since this is the default) */
+  setMode(OPERATION_MODE_CONFIG);
+  delay(25);
+  write8(GYRO_CONFIG_0, range | freq);
+  // add operation mode to config register 1
+  if(opmode != GYRO_OPER_UNDEFINED)
+  {
+    write8(GYRO_CONFIG_1, opmode);
+  }
+  /* Set the original operating mode (see section 3.3) */
+  setMode(modeback);
+  delay(20);
+}
+
+/*!
+ *  @brief  Writes to the sensor's accelerometer config registers
+ *  @param  range = sensitivity range
+            freq = data output frequency
+            opmode = operation mode
+ */
+void setAccelerometerConfig(adafruit_bno055_accel_range_t range,
+                            adafruit_bno055_accel_freq_t freq,
+                            adafruit_bno055_accel_oper_t opmode)
+{
+  adafruit_bno055_opmode_t modeback = _mode;
+
+  /* Switch to config mode (just in case since this is the default) */
+  setMode(OPERATION_MODE_CONFIG);
+  delay(25);
+  write8(ACC_CONFIG,  range | freq | opmode);
+
+  /* Set the original operating mode (see section 3.3) */
+  setMode(modeback);
+  delay(20);
+}
+
+/*!
+ *  @brief  Writes to the sensor's magnetometer config registers
+ *  @param  freq = data output frequency
+            opmode = operation mode
+            pwrmode =
+ */
+void setMagnetometerConfig(adafruit_bno055_mag_freq_t freq,
+                           adafruit_bno055_mag_oper_t opmode,
+                           adafruit_bno055_mag_pwr_t pwrmode)
+{
+  adafruit_bno055_opmode_t modeback = _mode;
+
+  /* Switch to config mode (just in case since this is the default) */
+  setMode(OPERATION_MODE_CONFIG);
+  delay(25);
+  write8(MAG_CONFIG, freq | opmode | pwrmod);
+
+  /* Set the original operating mode (see section 3.3) */
+  setMode(modeback);
+  delay(20);
+}
+
+/*!
  *  @brief  Writes an 8 bit value over I2C
  */
 bool Adafruit_BNO055::write8(adafruit_bno055_reg_t reg, byte value) {
